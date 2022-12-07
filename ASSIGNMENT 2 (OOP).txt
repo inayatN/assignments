@@ -1,0 +1,222 @@
+
+//header file:
+class String
+{
+public:
+	int length(char *);
+	char at(int i,char*);
+	void display();
+        String();   // default constructor
+	String(const String& str); // copy constructor
+	String(const String& str, int pos, int len); //Overloaded constructor for substring
+	String(char* s);     //Overloaded constructor for substring
+	String(char* s, int n);    //Overloaded constructor from the sequence
+	String(int n, char c); //Overloaded constructor for fill: 
+        String substr(int pos, int len); //String substr (int pos, int len) const
+private:
+	int size;
+	char *name;
+
+};
+
+
+//header.cpp":
+#include<iostream>
+#include"String.h"
+using namespace std;
+String::String(){}
+String::String(const String& str)
+{
+	this->size = str.size;
+	name = new char[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		name[i] = str.name[i];
+	}
+	name[size] = NULL;
+
+}
+void String::display()
+{
+	cout << name << endl;
+}
+String::String(const String& str, int pos, int len)
+{
+	this->size = str.size;
+	name = new char[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		name[i] = str.name[i];
+	}
+	name[size] = '\0';
+	if (len>size)
+	{
+		cout << " Length is greter :(" << endl;
+	}
+	else
+	{
+		int k = len - pos + 1;
+		char *arr = new char[k + 1];
+		int j = 0;
+		for (int i = pos; i < len; i++)
+		{
+			arr[j] = name[i];
+			j++;
+		}
+		arr[j] = '\0';
+		delete[] name;
+		name = nullptr;
+		name = new char[k + 1];
+		for (int i = 0; i < k; i++)
+		{
+			name[i] = arr[i];
+		}
+		name[k] = '\0';
+		delete[] arr;
+		arr = nullptr;
+	}
+}
+String::String(char* s)
+{
+	String obj;
+	size = obj.length(s);
+	name = new char[size + 1];
+	for (int i = 0; i < size; i++)
+	{
+		name[i] = s[i];
+	}
+	name[size] = NULL;
+}
+String::String( char *s, int n)
+{
+	size = length(s);
+	name = new char[n + 1];
+	for (int i = 0; i < n; i++)
+	{
+		name[i] = s[i];
+	}
+	name[n] = NULL;
+
+
+
+}
+//String::String(int n, char c)// some errors
+//{
+//	String res;
+//	res.size =this-> size;
+//	res.name = this->name;
+//	for (int i = 0; i < res.size; i++)
+//	{
+//		if (i < n)
+//		{
+//			res.name[i] = c;
+//		}
+//		else
+//		{
+//			res.name[i] = name[i];
+//		}
+//
+//	}
+//
+//	res.name[res.size] = NULL;
+//
+//}
+int String::length(char*n)
+{
+	int count = 0;
+	char *ptr = n;
+	for (int i = 0; n[i] != '\0'; i++)
+	{
+		count++;
+	}
+	return count;
+}
+char String::at(int k,char*c)
+{
+
+
+	int sixe = length(c);
+	for (int i = 0; i < sixe; i++)
+	{
+		if (i == k)
+		{
+			return this->name[i];
+		}
+	}
+
+
+
+}
+//String String :: substr(int pos, int len) 
+//{
+//	if (len > size)
+//	{
+//		cout << " Length is greater :" << endl;
+//	}
+//	else
+//	{
+//		int k = len - pos + 1;
+//		char *arr = new char[k + 1];
+//		int j = 0;
+//		for (int i = pos; i < len; i++)
+//		{
+//			arr[j] = name[i];
+//			j++;
+//		}
+//		arr[j] = '\0';
+//		delete[] name;
+//		name = nullptr;
+//		name = new char[k + 1];
+//		for (int i = 0; i < k; i++)
+//		{
+//			name[i] = arr[i];
+//		}
+//		name[k] = '\0';
+//		delete[] arr;
+//		arr = nullptr;
+//	}
+//	return name;
+//}
+
+//main .cpp
+#include<iostream>
+#include"String.h"
+using namespace std;
+int main()
+{
+	char a[] = "aneequrrehman";
+	String obj(a);
+	cout << obj.length(a) << endl;
+	String bj1 = obj;
+	bj1.display();
+
+	int pos;
+	int lenght;
+	cout << "Enter the pos  :";
+	cin >> pos;
+	cout << " Enter the length  :";
+	cin >> lenght;
+	String obj1(obj, pos, lenght);
+	obj1.display();
+	cout << " ENter the index character do you want :" << endl;
+	int ind;
+	cin >> ind;
+	String data(obj);
+	cout << data.at(ind,a) << endl;
+	int p;
+	cout << " Enter the character size do you want :";
+	cin >> p;
+	String data1(a, p);
+	data1.display();
+	/*String data2;
+	data2.substr(2, 9);
+	data2.display();*/
+
+	cout << "heheheheeh" << endl;
+	system("pause");
+	return 0;
+}
+
+
+
+
